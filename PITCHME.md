@@ -1,16 +1,18 @@
-# Let's Get Started
+# 今日の成果発表
 
 ---
 
-## Add Some Slide Candy
+## Who am I?
 
-![](assets/img/presentation.png)
+@devj
 
----?color=linear-gradient(180deg, white 75%, black 25%)
-@title[Customize Slide Layout]
+ネイティブエンジニアですが、
+クラウドプラットフォームのインフラチームに所属しています。
+普段はメインにiOS/Android/Unity/Windows用のSDKの開発と
+自社環境にDockerで構成されているゲームサーバの軽いモニタリングをしています。
 
-@snap[west span-50]
-## Customize the Layout
+
+## 今日のやりたかったこと
 @snapend
 
 @snap[east span-50]
