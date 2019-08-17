@@ -16,8 +16,8 @@
 
 AWS初期設定
 AWS環境にChefを使ってDockerでHAProxyを使ったLB(夢)
- - staging-application
- - prod-application
+ - application-staging
+ - application-prod
  - haproxy-lb
 
 ---
@@ -53,56 +53,95 @@ AWS環境にChefを使ってDockerでHAProxyを使ったLB(夢)
 
 ---
 
-### EC2でChef
+## EC2でChef - 1
 
 Chef構成
 
-### Chef Server
- - Nodeの管理、Cookbook, Recipe情報などの構成管理を行う
-### Workstation
+ - Chef Server
+   - Nodeの管理、Cookbook, Recipe情報などの構成管理を行う
+   - Workstation
  - Knifeコマンドで、CookbookやRecipeを操作したり、Chef Serverに支持をしたりする環境
-### Node
- - Chef Serverが管理するマシン
- - Chef Serverで管理しているCookbookやRecipe情報をNode上のChef Clientが取得して、そのタスクを実行します。
+ - Node
+   - Chef Serverが管理するマシン
+   - Chef Serverで管理しているCookbookやRecipe情報をNode上のChef Clientが取得して、そのタスクを実行します。
 
 ---
 
-@snapend
+## EC2でChef - 2
 
-@snap[east span-50]
-![](assets/img/presentation.png)
-@snapend
+**Chef ServerインストールからWorkstationの設定まで**
+```
+$ chef-server-ctl reconfigure
+```
 
-@snap[south span-100 text-white]
-Snap Layouts let you create custom slide designs directly within your markdown.
-@snapend
+CommandFailed: Expected process to exit with [0], but received '1'
 
----?color=linear-gradient(90deg, #5384AD 65%, white 35%)
-@title[Add A Little Imagination]
+原因メモリ不足
 
-@snap[north-west h4-white]
-#### And start presenting...
-@snapend
+---
 
-@snap[west span-55]
-@ul[spaced text-white]
-- You will be amazed
-- What you can achieve
-- *With a little imagination...*
-- And **GitPitch Markdown**
-@ulend
-@snapend
+## EC2でChef - 3
 
-@snap[east span-45]
-@img[shadow](assets/img/conference.png)
-@snapend
+結論: microではメモリが足りないのでChef Serverインストールができない
+次になにやる？
 
----?image=assets/img/presenter.jpg
+ - Chef Solo
+ - Amazon ECS: amazon + docker
+ - Amazon EKS: amazon + kubernetes
+ - GKE
 
-@snap[north span-100 h2-white]
-## Now It's Your Turn
-@snapend
+---
 
-@snap[south span-100 text-06]
-[Click here to jump straight into the interactive feature guides in the GitPitch Docs @fa[external-link]](https://gitpitch.com/docs/getting-started/tutorial/)
-@snapend
+
+## EC2 Docker-Compose
+
+docker インストール
+```
+$ sudo /bin/bash
+$ yum update
+$ yum install -y docker
+# docker 起動
+$ service docker start # < 失敗する?
+```
+
+---
+
+## docker-compose インストール
+
+```
+$ curl -L "https://github.com/docker/compose/releases/download/1.9.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+-> 権限で怒られたのでrootで実行
+$ sudo chmod +x /usr/local/bin/docker-compose
+-> rootで実行失敗したのでec2-userで実行
+$ docker-compose --version
+```
+
+---
+
+## WordPressを立ち上げる
+
+[ここ](https://qiita.com/yumatsud/items/33bc22f7d8f640a286f4)を参考にもくもく
+
+Docker Composerを使って複数のコンテナを一元管理
+構成
+ - WordPressイメージを利用
+ - MySQLイメージを利用
+ - データ保存先は保存用のコンテナを準備
+[プログラマのためのDocker教科書](https://www.amazon.co.jp/Docker/dp/479814102X/ref=tmm_other_meta_binding_swatch_0?_encoding=UTF8&qid=1483682891&sr=8-1-fkmr0)が参考リンクらしい
+
+---
+
+## WordPressを立ち上げる - 結果
+
+docker imageのダウンロードとコンテナ起動は成功したが、
+
+Error establishing a database connection
+エラーになりました。
+
+---
+
+## dockerだけでwebpage
+
+
+dockerだけでwebpageを出す
+
