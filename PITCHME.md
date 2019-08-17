@@ -1,4 +1,4 @@
-# 今日の成果発表
+# 今日の成果
 
 ---
 
@@ -11,8 +11,19 @@
 普段はメインにiOS/Android/Unity/Windows用のSDKの開発と
 自社環境にDockerで構成されているゲームサーバの軽いモニタリングをしています。
 
-
+---
 ## 今日のやりたかったこと
+
+AWS環境にChefを使ってDockerでHAProxyを使ったLB(夢)
+
+---
+
+## 実際にやったこと
+
+IAMユーザー設定
+
+---
+
 @snapend
 
 @snap[east span-50]
