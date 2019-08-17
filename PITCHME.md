@@ -14,13 +14,56 @@
 ---
 ## 今日のやりたかったこと
 
+AWS初期設定
 AWS環境にChefを使ってDockerでHAProxyを使ったLB(夢)
+ - staging-application
+ - prod-application
+ - haproxy-lb
 
 ---
 
 ## 実際にやったこと
 
-IAMユーザー設定
+ - AWS 初期設定
+ - EC2で作業
+ - EC2でChef
+ - EC2でdocker-compose
+ - EC2でdockerだけ
+
+---
+
+## AWS 初期設定
+
+ - IAMユーザー設定
+   - ルートユーザー設定
+ - セキュリティ設定
+   - ユーザー生成
+   - ユーザーグループ生成
+ - 料金関連設定
+   - 料金警告通知など
+
+---
+
+## EC2で作業
+
+ - インスタンス生成
+ - キーペアをダウンロード＞忘れた
+ - キーペアダウンロードは一度のみだったので再度インスタンス作成＋キーペアのダウンロード
+ - SSH接続成功
+
+---
+
+### EC2でChef
+
+Chef構成
+
+### Chef Server
+ - Nodeの管理、Cookbook, Recipe情報などの構成管理を行う
+### Workstation
+ - Knifeコマンドで、CookbookやRecipeを操作したり、Chef Serverに支持をしたりする環境
+### Node
+ - Chef Serverが管理するマシン
+ - Chef Serverで管理しているCookbookやRecipe情報をNode上のChef Clientが取得して、そのタスクを実行します。
 
 ---
 
